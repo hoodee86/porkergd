@@ -18,8 +18,8 @@ public class CardBox {
                 this.cardCount++;
             }
         }
-        cards.add(new Card(Value.BlackJoker, Suit.JOKER));
-        cards.add(new Card(Value.RedJoker, Suit.JOKER));
+        cards.add(new Card(Value.BlackJoker, null));
+        cards.add(new Card(Value.RedJoker, null));
         this.cardCount += 2;
     }
 

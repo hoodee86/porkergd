@@ -1,16 +1,16 @@
 package tech.hoodee.porkergd;
 
 public enum Position {
-    NORTH(0),
+    SOUTH(0),
     EAST(1),
-    SOUTH(2),
+    NORTH(2),
     WEST(3);
 
-    private final int position;
-    Position(int position) {
-        this.position = position;
+    private final int value;
+    Position(int value) {
+        this.value = value;
     }
-    public int getPosition() {
-        return position;
+    public int getValue() {
+        return value;
     }
 }

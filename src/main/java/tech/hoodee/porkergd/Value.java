@@ -13,9 +13,9 @@ public enum Value {
     JACK(11),
     QUEEN(12),
     KING(13),
-    ACE(1),
-    BlackJoker(14),
-    RedJoker(15);
+    ACE(14),
+    BlackJoker(15),
+    RedJoker(16);
 
     private final int value;
 

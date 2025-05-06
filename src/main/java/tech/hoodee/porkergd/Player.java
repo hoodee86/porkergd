@@ -1,7 +1,6 @@
 package tech.hoodee.porkergd;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,13 +25,30 @@ public class Player {
     private String id;
     private String name;
     private Position position; 
-    private List hand;
+    private List<Card> pocket;
 
     public Player(String name, Position position) {
         this.id = UUID.randomUUID().toString(); // Generate a unique ID for the player
         this.name = name;
         this.position = position;
-        this.hand = new LinkedList(); // card in player's hand, private card queue
+        this.pocket = new ArrayList<>(); // card in player's hand, private card queue
+    }
+
+    public Player(Position position) {
+        this.id = UUID.randomUUID().toString(); // Generate a unique ID for the player
+        this.name = "Player" + position.getValue();
+        this.position = position;
+        this.pocket = new ArrayList<>(); // card in player's hand, private card queue
+    }
+
+    public void deal(List<Card> cards) {
+        for (Card card : cards) {
+            this.pocket.remove(card);
+        }
+    }
+
+    public void fold() {
+
     }
 
     public String getId() {
@@ -42,10 +58,10 @@ public class Player {
     public void setId(String id) {
         this.id = id;
     }
-    public Position gePosition() {
+    public Position getPosition() {
         return position;
     }
-    public void setSeatPosition(Position position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -57,11 +73,15 @@ public class Player {
         this.name = name;
     }
 
-    public List getHand() {
-        return hand;
+    public List<Card> getPocket() {
+        return pocket;
     }
 
-    public void setHand(List hand) {
-        this.hand = hand;
+    public void setPocket(List<Card> pocket) {
+        this.pocket = pocket;
+    }
+
+    public void receiveOneCard(Card card) {
+        pocket.add(card);
     }
 }

@@ -1,10 +1,10 @@
 package tech.hoodee.porkergd;
 
 public enum Position {
-    SOUTH(0),
-    EAST(1),
-    NORTH(2),
-    WEST(3);
+    EAST(0),
+    NORTH(1),
+    WEST(2),
+    SOUTH(3);
 
     private final int value;
     Position(int value) {

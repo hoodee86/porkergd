@@ -1,16 +1,17 @@
 package tech.hoodee.porkergd;
 
-import java.sql.Date;
+import java.util.Date;
+import java.util.List;
 
 public class HandRecord {
     private Player player; // 谁？
     private Date time; // 什么时候？
     private Operation operation; // 做了什么？
-    private Card[] cards;
+    private List<Card> cards;
 
-    public HandRecord(Player player, Operation operation, Card[] cards) {
+    public HandRecord(Player player, Operation operation, List<Card> cards) {
         this.player = player;
-        this.time = new Date(System.currentTimeMillis());
+        this.time = new Date();
         this.operation = operation;
         this.cards = cards;
     }

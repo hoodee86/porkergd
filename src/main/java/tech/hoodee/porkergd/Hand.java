@@ -2,6 +2,7 @@ package tech.hoodee.porkergd;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 enum Status {
     PLAYING,
@@ -17,37 +18,34 @@ public class Hand {
     private int byeCount; // 过牌次数
     private Status status; // 当前状态
 
-    public Hand(Player[] players, int startPlayer, CardType cardType, Card[] cards) {
+    public Hand(Player[] players, int startPlayer) {
         this.byeCount = 0;
         this.players = players;
         this.startPlayer = startPlayer;
         this.currentPlayer = startPlayer;
-        this.cardType = cardType;
+        this.cardType = CardType.NONE;
         this.handRecords = new ArrayList<>();
         this.status = Status.PLAYING;
     }
 
-    /* 判断当前轮是否一直跟 */
-    public Player nextPlayer() {
-        int nextIndex = (this.currentPlayer + 1) % 4;
-        return players[nextIndex];
-    }
-
-    public boolean nextHandRecord(int player, Operation operation, CardType cardType, Card[] cards) {
-        if (cardType != this.cardType) {
-            return false; // 牌型不匹配
-        }
-        if (this.byeCount >= 3) {
-            this.status = Status.OVER;
-            return false; // 过牌次数超过3次
-        }
-        this.currentPlayer = player;
-        if (operation == Operation.FOLD) {
+    public boolean next() {
+        Operation operation;
+        Map<CardType, List<Card>> cards = players[currentPlayer].play();
+        if (cards == null) {
+            operation = Operation.PASS;
             this.byeCount++;
+            handRecords.add(new HandRecord(players[currentPlayer], operation, null));
         } else {
+            operation = Operation.DEAL;
             this.byeCount = 0;
+            handRecords.add(new HandRecord(players[currentPlayer], operation, cards.values().iterator().next()));
         }
-        handRecords.add(new HandRecord(currentPlayer, operation, cards));
+        if (byeCount >= 3) {
+            this.status = Status.OVER;
+            return false;
+        } else {
+            this.currentPlayer = (this.currentPlayer + 1) % 4;
+        }
         return true;
     }
 

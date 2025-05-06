@@ -84,12 +84,14 @@ public class Round {
     public int getLevel() {
         return level;
     }
-
-    /* 
-    public boolean nextRound(Player startPlayer, CardType cardType, Card[] cards) {
-        Hand hand = new Hand(players, startPlayer, cardType, cards);
-        this.hands.add(hand);
-        return true;
-    }*/
+    
+    public void start(int startPlayer) {
+        while (true) {
+            Hand hand = new Hand(players, startPlayer);
+            this.hands.add(hand);
+            while (hand.next());
+            startPlayer = hand.getCurrentPlayer();
+        }
+    }
 
 }

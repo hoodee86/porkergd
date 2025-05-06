@@ -1,26 +1,12 @@
 package tech.hoodee.porkergd;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.UUID;
 
-
-// TODO: sort data structure
-/*
-1）对子：one pair（两张相同点数的牌）
-2）三连对：three pair（有两张相同点数的牌，加另外两张相同点数的牌）
-3）同花：flush（五张顺连的牌）
-4）同花顺：straight flush（五张同一花色且顺连的牌）
-5）三条：three of a kind （三张同点数的牌）
-6）四条：four of a kind（四张同点数的牌，又叫炸弹）
-7）俘虏、葫芦：full house（三张同一点数的牌，加一对其他点数的牌）
-8）散牌：high card（不能排成以上组合的牌，以点数决定大小）
-9) 3+3
-10) five of a kind
-11) six of a kind
-12) seven of a kind
-13) eight of a kind
- */
 public class Player {
     private String id;
     private String name;
@@ -41,14 +27,31 @@ public class Player {
         this.pocket = new ArrayList<>(); // card in player's hand, private card queue
     }
 
-    public void deal(List<Card> cards) {
-        for (Card card : cards) {
-            this.pocket.remove(card);
+    public Map<CardType, List<Card>> play() {
+        Scanner scanner = new Scanner(System.in);
+        Map<CardType, List<Card>> dealtCards = new HashMap<>();
+        System.out.println("current player: " + name);
+        System.out.println("1. deal   2. pass");
+        String action = scanner.nextLine();
+        if (action.equals("pass")) {
+            scanner.close();
+            return null;
+        } else {
+            System.out.println("Enter card index (or type '-1' to finish):");
+            List<Card> cards = new ArrayList<>();
+            while (true) {           
+                int cardIndex = Integer.parseInt(scanner.nextLine());
+                if (cardIndex == -1) {
+                    break;
+                }
+                cards.add(pocket.get(cardIndex));
+                pocket.remove(cardIndex);
+            }
+            CardType cardType = Rule.getCardType(cards);
+            dealtCards.put(cardType, cards);
+            scanner.close();
+            return dealtCards;
         }
-    }
-
-    public void fold() {
-
     }
 
     public String getId() {

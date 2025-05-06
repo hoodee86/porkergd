@@ -39,7 +39,7 @@ public class Game {
         cardBox.shuffle();
     }
 
-    public void nextRound() {
+    public void startRound() {
         // 开始洗牌
         shuffle();
         // 开始发牌
@@ -51,15 +51,20 @@ public class Game {
             }
             System.out.println("-------------------------------");
         } 
+
+        // 开始新一轮
+        Player[] initOrderPlayers = players;
         if (currentRound == null) {
-            currentRound = new Round(players, 2, players);
+            currentRound = new Round(players, 2, initOrderPlayers);
             rounds.add(currentRound);
         } else {
-            Player[] initOrderPlayers = currentRound.getFinalOrderPlayers();
+            initOrderPlayers = currentRound.getFinalOrderPlayers();
             int level = currentRound.nextRoundLevel(playerLevel);
             currentRound = new Round(players, level, initOrderPlayers);
             rounds.add(currentRound);
         }
+
+        currentRound.start(initOrderPlayers[0].getPosition().getValue());
         
     }
 

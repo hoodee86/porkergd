@@ -1,5 +1,7 @@
 package tech.hoodee.porkergd;
 
+import java.util.List;
+
 public class Rule {
     // 掼蛋的规则
     // 1. 牌型：单张、对子、三张、顺子、连对、飞机、炸弹
@@ -10,6 +12,17 @@ public class Rule {
 
     public static boolean check(Card[] cards) {
         return true;
+    }
+
+    public static CardType getCardType(List<Card> cards) {
+        // 1. 单张
+        // 2. 对子
+        // 3. 三张
+        // 4. 顺子
+        // 5. 连对
+        // 6. 飞机
+        //}
+        return CardType.SINGLE;
     }
 
 }
